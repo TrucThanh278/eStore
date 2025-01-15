@@ -1,7 +1,8 @@
 import express, { Express, Request, Response } from 'express';
-
+import swaggerInit from './config';
 const app: Express = express();
 const port = process.env.PORT || 3000;
+swaggerInit(app);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
