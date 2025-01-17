@@ -1,6 +1,6 @@
 import { Express } from 'express';
-import swaggerUi from 'swagger-ui-express';
-import swaggerJsdoc from 'swagger-jsdoc';
+import { serve, setup } from 'swagger-ui-express';
+import * as swaggerJsdoc from 'swagger-jsdoc';
 const options = {
   definition: {
     openapi: '3.1.0',
@@ -19,7 +19,7 @@ const options = {
   apis: ['./routes/*.js'],
 };
 const specs = swaggerJsdoc(options);
-const swaggerInit= (app: Express) => {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+const swaggerInit = (app: Express) => {
+  app.use('/api-docs', serve, setup(specs));
 };
 export default swaggerInit;
