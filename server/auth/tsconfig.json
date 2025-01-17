@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
-    "lib": ["es5", "es6"],
-    "target": "es5",
-    "module": "ESNext",
+    "moduleDetection": "force",
+    "module": "Preserve",
+    "target": "ESNext",
     "moduleResolution": "node",
-    "outDir": "./build",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "sourceMap": true
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "isolatedModules": true,
+    "sourceMap": true,
+    "outDir": "dist"
   },
-  "ts-node": {
-    "esm": true
-  }
+  "exclude": ["node_modules", "dist", "test"]
 }
