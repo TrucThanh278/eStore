@@ -1,21 +1,21 @@
-import { Column, Entity, Index, JoinTable, ManyToMany, Unique } from 'typeorm';
+import { Column, Entity, Index, JoinTable, ManyToMany } from 'typeorm';
 
 import { CustomBaseEntity } from './custom-base.entity';
 import { PermissionEntity } from './permission.entity';
+import { typeString, typeText } from './database.type';
 
 @Entity({
   name: 'role',
 })
-@Unique(['name'])
 export class RoleEntity extends CustomBaseEntity {
-  @Column('varchar', { length: 100 })
+  @Column(typeString)
   @Index({
     unique: true,
   })
-  name: string;
+  name?: string;
 
-  @Column('text')
-  description: string;
+  @Column(typeText)
+  description?: string;
 
   @ManyToMany(() => PermissionEntity, (permission) => permission.role)
   @JoinTable({
@@ -29,7 +29,7 @@ export class RoleEntity extends CustomBaseEntity {
       referencedColumnName: 'id',
     },
   })
-  permission: PermissionEntity[];
+  permission?: PermissionEntity[];
 
   constructor(data?: Partial<RoleEntity>) {
     super();

@@ -10,7 +10,7 @@ export const AppDataSource = new DataSource({
   host: 'localhost',
   port: 3306,
   username: 'root',
-  password: 'ThanhTruc2708',
+  password: 'ngoquang178',
   database: 'estore',
   synchronize: true,
   logging: false,

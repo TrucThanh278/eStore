@@ -5,38 +5,50 @@ import {
   Index,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import {
+  typeBoolean,
+  typeNumber,
+  typeString,
+  typeTimestamp,
+} from './database.type';
+import { DEFAULT_TIMESTAMP } from '../common/constant/database.constant';
 
 @Entity({
   name: 'refresh_token',
 })
 export class RefreshToken extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
-  @Column()
-  userId: number;
+  @Column(typeNumber)
+  userId?: number;
 
-  @Column()
-  ip: string;
+  @Column(typeString)
+  ip?: string;
 
-  @Column()
-  userAgent: string;
-
-  @Index()
-  @Column({
-    nullable: true,
-  })
-  browser: string;
+  @Column(typeString)
+  userAgent?: string;
 
   @Index()
   @Column({
+    ...typeString,
     nullable: true,
   })
-  os: string;
+  browser?: string;
 
-  @Column()
-  isRevoked: boolean;
+  @Index()
+  @Column({
+    ...typeString,
+    nullable: true,
+  })
+  os?: string;
 
-  @Column()
-  expires: Date;
+  @Column(typeBoolean)
+  isRevoked?: boolean;
+
+  @Column({
+    ...typeTimestamp,
+    default: () => `${DEFAULT_TIMESTAMP} + INTERVAL 7 DAY`,
+  })
+  expires?: Date;
 }

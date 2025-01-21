@@ -13,6 +13,12 @@ import { CustomBaseEntity } from './custom-base.entity';
 import { Exclude } from 'class-transformer';
 import { UserStatusEnum } from '../common/enums/user-status.enum';
 import { RoleEntity } from './role.entity';
+import {
+  typeBoolean,
+  typeNumber,
+  typeString,
+  typeTimestamp,
+} from './database.type';
 
 @Entity({
   name: 'user',
@@ -21,58 +27,56 @@ export class UserEntity extends CustomBaseEntity {
   @Index({
     unique: true,
   })
-  @Column()
-  username: string;
+  @Column(typeString)
+  username?: string;
 
   @Index({
     unique: true,
   })
-  @Column()
-  email: string;
+  @Column(typeString)
+  email?: string;
 
-  @Column()
+  @Column(typeString)
   @Exclude({
     toPlainOnly: true,
   })
-  password: string;
+  password?: string;
 
   @Index()
-  @Column()
-  name: string;
+  @Column(typeString)
+  name?: string;
 
-  @Column()
-  address: string;
+  @Column(typeString)
+  address?: string;
 
-  @Column()
-  contact: string;
+  @Column({ ...typeString, nullable: true })
+  contact?: string;
 
-  @Column()
-  avatar: string;
+  @Column({ ...typeString, nullable: true })
+  avatar?: string;
 
-  @Column()
-  status: UserStatusEnum;
+  @Column({ ...typeString, nullable: true })
+  status?: UserStatusEnum;
 
-  @Column()
+  @Column({ ...typeString, nullable: true })
   @Exclude({
     toPlainOnly: true,
   })
-  token: string;
+  token?: string;
 
   @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
+    ...typeTimestamp,
+    nullable: true,
   })
-  tokenValidityDate: Date;
+  tokenValidityDate?: Date;
 
-  @Column()
+  @Column({ ...typeString, nullable: true, default: '10' })
   @Exclude({
     toPlainOnly: true,
   })
-  salt: string;
+  salt?: string;
 
-  @Column({
-    nullable: true,
-  })
+  @Column({ ...typeString, nullable: true })
   @Exclude({
     toPlainOnly: true,
   })
@@ -81,16 +85,14 @@ export class UserEntity extends CustomBaseEntity {
   @Exclude({
     toPlainOnly: true,
   })
-  @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
-  })
+  @CreateDateColumn(typeTimestamp)
   twoFAThrottleTime?: Date;
 
   @Column({
-    default: false,
+    ...typeBoolean,
+    nullable: true,
   })
-  isTwoFAEnabled: boolean;
+  isTwoFAEnabled?: boolean;
 
   @Exclude({
     toPlainOnly: true,
@@ -99,10 +101,10 @@ export class UserEntity extends CustomBaseEntity {
 
   @OneToOne(() => RoleEntity)
   @JoinColumn()
-  role: RoleEntity;
+  role?: RoleEntity;
 
-  @Column()
-  roleId: number;
+  @Column({ ...typeNumber, nullable: true })
+  roleId?: number;
 
   @BeforeInsert()
   async hashPasswordBeforeInsert() {
@@ -119,11 +121,11 @@ export class UserEntity extends CustomBaseEntity {
   }
 
   async validatePassword(password: string): Promise<boolean> {
-    const hash = await bcrypt.hash(password, this.salt);
+    const hash = await bcrypt.hash(password, this.salt ?? 10);
     return hash === this.password;
   }
 
   async hashPassword() {
-    this.password = await bcrypt.hash(this.password, this.salt);
+    this.password = await bcrypt.hash(this.password ?? '', this.salt ?? 10);
   }
 }

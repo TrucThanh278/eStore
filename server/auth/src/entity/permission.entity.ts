@@ -1,37 +1,38 @@
-import { Column, Entity, Index, ManyToMany, Unique } from 'typeorm';
+import { Column, Entity, Index, ManyToMany } from 'typeorm';
 
 import { CustomBaseEntity } from './custom-base.entity';
 import { RoleEntity } from './role.entity';
+import { typeBoolean, typeString } from './database.type';
 
 @Entity({
   name: 'permission',
 })
-@Unique(['description'])
 export class PermissionEntity extends CustomBaseEntity {
-  @Column('varchar', { length: 100 })
-  resource: string;
+  @Column(typeString)
+  resource?: string;
 
-  @Column()
+  @Column(typeString)
   @Index({
     unique: true,
   })
-  description: string;
+  description?: string;
 
-  @Column()
-  path: string;
+  @Column(typeString)
+  path?: string;
 
-  @Column('varchar', {
+  @Column({
+    ...typeString,
     default: 'get',
     length: 20,
   })
-  method: string;
+  method?: string;
 
-  @Column()
-  isDefault: boolean;
+  @Column(typeBoolean)
+  isDefault?: boolean;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @ManyToMany((type) => RoleEntity, (role) => role.permission)
-  role: RoleEntity[];
+  role?: RoleEntity[];
 
   constructor(data?: Partial<PermissionEntity>) {
     super();

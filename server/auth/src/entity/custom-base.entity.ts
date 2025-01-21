@@ -4,24 +4,21 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { typeTimestamp } from './database.type';
 
 /**
  * custom base entity
  */
 export abstract class CustomBaseEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
-  @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
-  })
-  createdAt: Date;
+  @CreateDateColumn(typeTimestamp)
+  createdAt?: Date;
 
   @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
-    onUpdate: 'CURRENT_TIMESTAMP',
+    ...typeTimestamp,
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  updatedAt: Date;
+  updatedAt?: Date;
 }
