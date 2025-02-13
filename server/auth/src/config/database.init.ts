@@ -6,8 +6,8 @@ const databaseInitialize = async () => {
   const roles = ['ADMIN', 'USER'];
   try {
     await AppDataSource.initialize();
-    const currentROle = await AppDataSource.manager.find(RoleEntity);
-    if (currentROle) return;
+    const currentRole = await AppDataSource.manager.find(RoleEntity);
+    if (currentRole.length!= 0 ) return;
     for (const role of roles) {
       const roleEntity = new RoleEntity();
       roleEntity.name = role;

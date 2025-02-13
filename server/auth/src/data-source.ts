@@ -3,7 +3,6 @@ import { DataSource } from 'typeorm';
 import { UserEntity } from './entity/user.entity';
 import { PermissionEntity } from './entity/permission.entity';
 import { RoleEntity } from './entity/role.entity';
-import { RefreshToken } from './entity/refresh-token.entity';
 
 export const AppDataSource = new DataSource({
   type: 'mysql',
@@ -12,9 +11,9 @@ export const AppDataSource = new DataSource({
   username: 'root',
   password: 'ngoquang178',
   database: 'estore',
-  synchronize: true,
+  synchronize: false,
   logging: false,
-  entities: [UserEntity, PermissionEntity, RoleEntity, RefreshToken],
-  migrations: [],
+  entities: [UserEntity, PermissionEntity, RoleEntity],
+  migrations: ['src/database/migrations/**/*.ts'], // TypeORM sẽ tự tìm file migration ở đây
   subscribers: [],
 });
