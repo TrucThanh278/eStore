@@ -1,2 +1,2 @@
-import swaggerInit from "./swagger.config";
+import swaggerInit from './swagger.config';
 export default swaggerInit;

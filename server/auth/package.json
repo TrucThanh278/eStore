@@ -20,7 +20,8 @@
     "dev": "tsx watch src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "typeorm": "typeorm-ts-node-commonjs",
-    "generate-migrations": "npx tsx node_modules/typeorm/cli.js migration:generate -d src/data-source.ts src/database/migrations/newMigration"
+    "generate-migrations": "tsx node_modules/typeorm/cli.js migration:generate -d src/data-source.ts src/database/migrations/newMigration",
+    "run-migrations": "tsx node_modules/typeorm/cli.js migration:run -d src/data-source.ts"
   },
   "keywords": [],
   "author": "",
