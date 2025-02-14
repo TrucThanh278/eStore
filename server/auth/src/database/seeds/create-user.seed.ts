@@ -9,8 +9,8 @@ export class UserSeeder implements Seeder {
     const roleRepo = dataSource.getRepository(RoleEntity);
 
     // Lấy role từ database
-    const adminRole = await roleRepo.findOne({ where: { name: 'Admin' } });
-    const userRole = await roleRepo.findOne({ where: { name: 'User' } });
+    const adminRole = await roleRepo.findOne({ where: { name: 'ADMIN' } });
+    const userRole = await roleRepo.findOne({ where: { name: 'USER' } });
 
     if (!adminRole || !userRole) {
       console.error('>>>>>> Roles not found! Run RoleSeeder first.');
