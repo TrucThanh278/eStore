@@ -1,12 +1,11 @@
 import 'reflect-metadata';
 import express, { Express, Request, Response } from 'express';
 import swaggerInit from './config';
-import databaseInitialize from './config/database.init';
+import { dataSource } from './data-source';
 const app: Express = express();
 const port = process.env.PORT || 3000;
 swaggerInit(app);
-databaseInitialize();
-
+dataSource.initialize();
 app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
 });
