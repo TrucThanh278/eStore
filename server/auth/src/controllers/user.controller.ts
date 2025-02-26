@@ -7,10 +7,9 @@ import { ExceptionMessageList } from '../common/constants/exception-title-list.c
 import { RoleEntity } from '../entity/role.entity';
 import init, { meta } from '../pagination/meta';
 
-
 export const fetchUsers = async (req: Request, res: Response) => {
   const { page } = req.query;
-  const {page_size, current_page, offset } = init(page);
+  const { page_size, current_page, offset } = init(page);
   const userRepository = dataSource.getRepository(UserEntity);
   const [users, totalUsers] = await userRepository
     .createQueryBuilder('user')
@@ -24,7 +23,7 @@ export const fetchUsers = async (req: Request, res: Response) => {
     .json({
       meta: meta({
         current_page: current_page,
-        page_size:page_size ,
+        page_size: page_size,
         totalItems: totalUsers,
         count: users.length,
       }),

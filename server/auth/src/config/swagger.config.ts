@@ -20,8 +20,8 @@ const options = {
   },
   apis: [path.join(__dirname, '../routes/user.route.ts')],
 };
-const specs =  swaggerJSDoc(options);
+const specs = swaggerJSDoc(options);
 const swaggerInit = (app: Express) => {
-  app.use('/api-docs', serve, setup(specs, {explorer: true}));
+  app.use('/api-docs', serve, setup(specs, { explorer: true }));
 };
 export default swaggerInit;

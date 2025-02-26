@@ -1,4 +1,4 @@
-import { pagination } from "../common/constants/pagination.constants";
+import { pagination } from '../common/constants/pagination.constants';
 
 type metaType = {
   current_page: number;
@@ -8,14 +8,14 @@ type metaType = {
 };
 
 const init = (page: unknown) => {
-  const current_page = page && page!= '0'? Number(page) : 1
+  const current_page = page && page != '0' ? Number(page) : 1;
   const page_size = pagination.page_size;
-  return  {
+  return {
     page_size: page_size,
     current_page: current_page,
-    offset: (current_page - 1) * page_size
-  }
-}
+    offset: (current_page - 1) * page_size,
+  };
+};
 export const meta = (metadata: metaType) => {
   const { current_page, page_size, totalItems, count } = metadata;
   const totalPages = totalItems / page_size;
@@ -26,4 +26,4 @@ export const meta = (metadata: metaType) => {
     next: current_page < totalPages ? current_page + 1 : null,
   };
 };
-export default init
+export default init;

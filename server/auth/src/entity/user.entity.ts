@@ -99,7 +99,7 @@ export class UserEntity extends CustomBaseEntity {
   })
   skipHashPassword = false;
 
-  @ManyToOne(() => RoleEntity,)
+  @ManyToOne(() => RoleEntity)
   @JoinColumn()
   role?: RoleEntity;
 

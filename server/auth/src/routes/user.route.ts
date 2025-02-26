@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { deleteUser, fetchUsers, storeUser, updateUser } from '../controllers/user.controller';
+import {
+  deleteUser,
+  fetchUsers,
+  storeUser,
+  updateUser,
+} from '../controllers/user.controller';
 export const router = Router();
 /**
  * @swagger
@@ -10,7 +15,7 @@ export const router = Router();
  *       200:
  *         description: Thành công
  */
-router.get('/', fetchUsers)
+router.get('/', fetchUsers);
 /**
  * @swagger
  * /users:
@@ -41,4 +46,3 @@ router.put('/:id', updateUser);
  *         description: Thành công
  */
 router.delete('/:id', deleteUser);
-
