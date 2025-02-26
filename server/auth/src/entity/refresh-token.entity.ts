@@ -11,7 +11,7 @@ import {
   typeString,
   typeTimestamp,
 } from './database.type';
-import { DEFAULT_TIMESTAMP } from '../common/constant/database.constant';
+import { DEFAULT_TIMESTAMP } from '../common/constants/database.constant';
 
 @Entity({
   name: 'refresh_token',

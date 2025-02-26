@@ -1,4 +1,4 @@
-import { DEFAULT_TIMESTAMP_6 } from '../common/constant/database.constant';
+import { DEFAULT_TIMESTAMP_6 } from '../common/constants/database.constant';
 
 const typeTimestamp = {
   type: 'timestamp' as const,

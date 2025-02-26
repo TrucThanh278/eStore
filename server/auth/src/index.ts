@@ -1,17 +1,18 @@
 import 'reflect-metadata';
-import express, { Express, Request, Response } from 'express';
+import express, { Express} from 'express';
 import swaggerInit from './config';
 import { dataSource } from './data-source';
+import { router } from './routes/user.route';
 const app: Express = express();
 const port = process.env.PORT || 3000;
-swaggerInit(app);
 
 (async () => {
   await dataSource.initialize();
   console.log('[server]: Database connection established successfully');
-  app.get('/', (req: Request, res: Response) => {
-    res.send('Express + TypeScript Server');
-  });
+  
+  app.use(express.json());
+  app.use("/users", router)
+  swaggerInit(app);
   app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
   });

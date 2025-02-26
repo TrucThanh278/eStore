@@ -1,8 +1,9 @@
-import { Column, Entity, Index, JoinTable, ManyToMany } from 'typeorm';
+import { Column, Entity, Index, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 
 import { CustomBaseEntity } from './custom-base.entity';
 import { PermissionEntity } from './permission.entity';
 import { typeString, typeText } from './database.type';
+import { UserEntity } from './user.entity';
 
 @Entity({
   name: 'role',
@@ -30,6 +31,9 @@ export class RoleEntity extends CustomBaseEntity {
     },
   })
   permission?: PermissionEntity[];
+
+  @OneToMany(() => UserEntity, (user) => user.role, {eager: true})
+  users?: UserEntity[];
 
   constructor(data?: Partial<RoleEntity>) {
     super();

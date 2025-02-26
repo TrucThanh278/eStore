@@ -16,26 +16,27 @@ export class UserSeeder implements Seeder {
       console.error('>>>>>> Roles not found! Run RoleSeeder first.');
       return;
     }
-
-    await userRepo.insert([
-      {
+     
+    const users = [
+      userRepo.create({
         username: 'admin',
         name: 'Admin',
         password: 'admin',
         email: 'admin123@gmail.com',
         address: 'Vietnam',
         role: adminRole,
-      },
-      {
+      }),
+      userRepo.create({
         username: 'user1',
         name: 'user1',
         password: 'user1',
         email: 'user1123@gmail.com',
         address: 'Vietnam',
         role: userRole,
-      },
-    ]);
+      }),
+    ]
+    const res = await Promise.all(users.map(user => userRepo.save(user)));
 
-    console.log('>>>>>> Seeded Users!');
+    console.log('>>>>>> Seeded Users!', res);
   }
 }

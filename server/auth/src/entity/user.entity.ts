@@ -3,10 +3,10 @@ import {
   Column,
   Index,
   CreateDateColumn,
-  OneToOne,
   JoinColumn,
   BeforeInsert,
   BeforeUpdate,
+  ManyToOne,
 } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { CustomBaseEntity } from './custom-base.entity';
@@ -99,7 +99,7 @@ export class UserEntity extends CustomBaseEntity {
   })
   skipHashPassword = false;
 
-  @OneToOne(() => RoleEntity)
+  @ManyToOne(() => RoleEntity,)
   @JoinColumn()
   role?: RoleEntity;
 
