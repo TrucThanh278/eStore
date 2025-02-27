@@ -5,7 +5,7 @@ import { dataSource } from './data-source';
 import { router } from './routes/user.route';
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT_PRODUCT || 3000;
 
 (async () => {
   await dataSource.initialize();
