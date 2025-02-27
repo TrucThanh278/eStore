@@ -25,6 +25,7 @@ export class UserSeeder implements Seeder {
         email: 'admin123@gmail.com',
         address: 'Vietnam',
         role: adminRole,
+        avatar: 'https://res.cloudinary.com/ddwhlsmqv/image/upload/v1740634202/defaultAvatar.png'
       }),
       userRepo.create({
         username: 'user1',
@@ -33,6 +34,7 @@ export class UserSeeder implements Seeder {
         email: 'user1123@gmail.com',
         address: 'Vietnam',
         role: userRole,
+        avatar: 'https://res.cloudinary.com/ddwhlsmqv/image/upload/v1740634202/defaultAvatar.png'
       }),
     ];
     const res = await Promise.all(users.map((user) => userRepo.save(user)));

@@ -8,11 +8,11 @@ import { RefreshToken } from './entity/refresh-token.entity';
 
 const options: DataSourceOptions & SeederOptions = {
   type: 'mysql',
-  host: 'localhost',
-  port: 3306,
-  username: 'root',
-  password: 'ThanhTruc2708',
-  database: 'estore',
+  host: process.env.HOST,
+  port: Number(process.env.PORT),
+  username: process.env.USERNAME,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
   synchronize: false,
   logging: true,
   entities: [UserEntity, PermissionEntity, RoleEntity, RefreshToken],
