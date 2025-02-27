@@ -38,31 +38,21 @@ export const storeUser = async (req: Request, res: Response) => {
   const userRepository = dataSource.getRepository(UserEntity);
   const roleRepository = dataSource.getRepository(RoleEntity);
   const role = await roleRepository.findOne({ where: { id: roleId } });
-  let avatar = undefined;
-
-  if (req.file) {
-    try {
-      const result = await uploadToCloudinary(req.file);
-      avatar = result.url;
-    } catch (e) {
-      console.error('>>>> Error upload image: ', e);
-    }
-  } else {
-    avatar =
-      'https://res.cloudinary.com/ddwhlsmqv/image/upload/v1740634202/defaultAvatar.png';
-  }
-
-  const user = userRepository.create({
-    username,
-    name,
-    password,
-    email,
-    address,
-    avatar,
-    role: role ?? undefined,
-  });
-
   try {
+    const user = userRepository.create({
+      username,
+      name,
+      password,
+      email,
+      address,
+      avatar:
+        'https://res.cloudinary.com/ddwhlsmqv/image/upload/v1740634202/defaultAvatar.png',
+      role: role ?? undefined,
+    });
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file);
+      user.avatar = result.url;
+    }
     const result = await userRepository.save(user);
     res
       .status(StatusCodesList.Created)
@@ -84,33 +74,26 @@ export const updateUser = async (req: Request, res: Response) => {
     where: { id: parseInt(req.params.id) },
   });
   try {
-    //  chuyển việc check role sang middleware
     if (existUser) {
       const { username, name, email, address } = req.body;
-      let avatar = undefined;
-      if (req.file) {
-        try {
-          const result = await uploadToCloudinary(req.file);
-          avatar = result.url;
-        } catch (e) {
-          console.error('>>>> Error upload image: ', e);
-        }
-      }
       Object.assign(existUser, {
         username: username ?? existUser.username,
         name: name ?? existUser.name,
         email: email ?? existUser.email,
         address: address ?? existUser.address,
-        avatar: avatar ?? existUser.avatar,
+        avatar: req.file
+          ? await uploadToCloudinary(req.file).then((res) => res.url)
+          : existUser.avatar,
       });
       const result = await userRepository.save(existUser);
       res
         .status(StatusCodesList.Success)
         .json({ result: instanceToPlain(result) });
-    } else
+    } else {
       res
-        .status(StatusCodesList.UnauthorizedAccess)
-        .json({ result: ExceptionMessageList.Unauthorized });
+        .status(StatusCodesList.NotFound)
+        .json({ result: ExceptionMessageList.NotFound });
+    }
   } catch (e) {
     console.error('>>>> Error update user: ', e);
     res
