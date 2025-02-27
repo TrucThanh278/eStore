@@ -11,10 +11,10 @@ const options: DataSourceOptions & SeederOptions = {
   host: 'localhost',
   port: 3306,
   username: 'root',
-  password: 'ngoquang178',
+  password: 'ThanhTruc2708',
   database: 'estore',
   synchronize: false,
-  logging: false,
+  logging: true,
   entities: [UserEntity, PermissionEntity, RoleEntity, RefreshToken],
   seeds: ['src/database/seeds/**/*{.ts,.js}'], // TypeORM sẽ tự tìm file seed ở đây
   migrations: ['src/database/migrations/**/*.ts'], // TypeORM sẽ tự tìm file migration ở đây

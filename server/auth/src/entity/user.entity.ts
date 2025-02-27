@@ -70,11 +70,11 @@ export class UserEntity extends CustomBaseEntity {
   })
   tokenValidityDate?: Date;
 
-  @Column({ ...typeString, nullable: true, default: '10' })
+  @Column({ ...typeNumber, nullable: true, default: 10 })
   @Exclude({
     toPlainOnly: true,
   })
-  salt?: string;
+  salt: number = 10;
 
   @Column({ ...typeString, nullable: true })
   @Exclude({
@@ -121,11 +121,11 @@ export class UserEntity extends CustomBaseEntity {
   }
 
   async validatePassword(password: string): Promise<boolean> {
-    const hash = await bcrypt.hash(password, this.salt ?? 10);
+    const hash = await bcrypt.hash(password, this.salt);
     return hash === this.password;
   }
 
   async hashPassword() {
-    this.password = await bcrypt.hash(this.password ?? '', this.salt ?? 10);
+    this.password = await bcrypt.hash(this.password ?? '', this.salt);
   }
 }

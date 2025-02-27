@@ -5,6 +5,8 @@ import {
   storeUser,
   updateUser,
 } from '../controllers/user.controller';
+import { upload } from '../config/multer.config';
+
 export const router = Router();
 /**
  * @swagger
@@ -25,7 +27,7 @@ router.get('/', fetchUsers);
  *       201:
  *         description: Thành công
  */
-router.post('/', storeUser);
+router.post('/', upload().single('avatar'), storeUser);
 /**
  * @swagger
  * /users/{id}:
@@ -35,7 +37,7 @@ router.post('/', storeUser);
  *       200:
  *         description: Thành công
  */
-router.put('/:id', updateUser);
+router.put('/:id', upload().single('avatar'), updateUser);
 /**
  * @swagger
  * /users/{id}:
